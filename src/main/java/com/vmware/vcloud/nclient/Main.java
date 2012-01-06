@@ -17,6 +17,7 @@ public class Main {
     static AmqpSettings defaultAmqpSettings() {
         AmqpSettings amqpSettings = new AmqpSettings();
         amqpSettings.setHost("localhost");
+        amqpSettings.setvHost("/");
         amqpSettings.setPort(5672);
         amqpSettings.setUsername("guest");
         amqpSettings.setPassword("guest");

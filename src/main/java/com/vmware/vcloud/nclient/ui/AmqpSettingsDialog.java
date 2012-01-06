@@ -22,6 +22,7 @@ public class AmqpSettingsDialog extends JDialog implements ActionListener {
     private static final long serialVersionUID = 1L;
 
     JTextField hostField;
+    JTextField vHostField;
     JTextField portField;
     JTextField userField;
     JPasswordField passField;
@@ -37,11 +38,13 @@ public class AmqpSettingsDialog extends JDialog implements ActionListener {
         getContentPane().add(westPanel, BorderLayout.WEST);
         westPanel.setLayout(new GridLayout(0, 1, 10, 10));
         JLabel hostLabel = new JLabel("Host:");
+        JLabel vHostLabel = new JLabel("vHost:");
         JLabel portLabel = new JLabel("Port:");
         JLabel userLabel = new JLabel("Username:");
         JLabel passLabel = new JLabel("Password:");
         JLabel vhostLabel = new JLabel("Queue:");
         westPanel.add(hostLabel);
+        westPanel.add(vHostLabel);
         westPanel.add(portLabel);
         westPanel.add(userLabel);
         westPanel.add(passLabel);
@@ -52,11 +55,13 @@ public class AmqpSettingsDialog extends JDialog implements ActionListener {
         getContentPane().add(centerPanel, BorderLayout.CENTER);
         centerPanel.setLayout(new GridLayout(0, 1, 10, 10));
         hostField = new JTextField(25);
+        vHostField = new JTextField(25);
         portField = new JTextField(25);
         userField = new JTextField(25);
         passField = new JPasswordField(25);
         queueField = new JTextField(25);
         centerPanel.add(hostField);
+        centerPanel.add(vHostField);
         centerPanel.add(portField);
         centerPanel.add(userField);
         centerPanel.add(passField);
@@ -82,6 +87,7 @@ public class AmqpSettingsDialog extends JDialog implements ActionListener {
         if (e.getActionCommand().equals("OK")) {
             settings = new AmqpSettings();
             settings.setHost(hostField.getText());
+            settings.setvHost(vHostField.getText());
             settings.setPort(Integer.parseInt(portField.getText()));
             settings.setUsername(userField.getText());
             settings.setPassword(new String(passField.getPassword()));
@@ -92,6 +98,7 @@ public class AmqpSettingsDialog extends JDialog implements ActionListener {
 
     void init(AmqpSettings settings) {
         hostField.setText(settings.getHost());
+        vHostField.setText(settings.getvHost());
         portField.setText("" + settings.getPort());
         userField.setText(settings.getUsername());
         passField.setText(settings.getPassword());

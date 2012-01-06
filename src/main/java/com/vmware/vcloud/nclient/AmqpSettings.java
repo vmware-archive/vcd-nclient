@@ -3,6 +3,7 @@ package com.vmware.vcloud.nclient;
 public class AmqpSettings {
 
     String host;
+    String vHost;
     int port;
     String username;
     String password;
@@ -16,7 +17,15 @@ public class AmqpSettings {
         this.host = host;
     }
 
-    public int getPort() {
+    public String getvHost() {
+		return vHost;
+	}
+
+	public void setvHost(String vHost) {
+		this.vHost = vHost;
+	}
+
+	public int getPort() {
         return port;
     }
 

@@ -17,6 +17,7 @@ public class AmqpClient {
     public void connect(AmqpSettings settings, final ConnectionListener listener) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(settings.getHost());
+        factory.setVirtualHost(settings.getvHost());
         factory.setPort(settings.getPort());
         factory.setUsername(settings.getUsername());
         factory.setPassword(settings.getPassword());

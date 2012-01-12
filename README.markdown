@@ -10,6 +10,6 @@ The application can connect to an AMQP broker, retrieve notification messages an
 ### Build and run
     mvn clean install
     cd target
-    java -jar vcd-nclient-1.0.0.jar
+    java -jar vcd-nclient-1.0.1.jar
 
   [vCloud Director v1.5]: http://www.vmware.com/products/vcloud-director/overview.html

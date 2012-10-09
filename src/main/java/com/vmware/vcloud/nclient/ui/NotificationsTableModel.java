@@ -34,6 +34,11 @@ public class NotificationsTableModel extends DefaultTableModel {
         insertRow(0, row);
     }
 
+    String getContentTypeForRow(int row) {
+        NotificationMessage msg = (NotificationMessage) getValueAt(row, 0);
+        return msg.getContentType();
+    }
+
     String getPayloadAndHeadersForRow(int row) {
         NotificationMessage msg = (NotificationMessage) getValueAt(row, 0);
         StringBuilder result = new StringBuilder();

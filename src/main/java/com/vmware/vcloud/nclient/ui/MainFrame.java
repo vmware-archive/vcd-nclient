@@ -57,7 +57,7 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
     JScrollPane xmlScrollPane;
     NotificationsTableModel tableModel;
     JTable table;
-    JEditorPane xmlEditor;
+    JEditorPane payloadEditor;
     AmqpSettingsDialog amqpDialog;
 
     boolean isRetrieving = false;
@@ -144,12 +144,12 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
         tableScrollPane.setViewportView(table);
         tableScrollPane.setPreferredSize(new Dimension(800, 300));
 
-        xmlEditor = new JEditorPane();
-        xmlEditor.setEditable(false);
-        xmlEditor.setEditorKitForContentType("text/xml", new XmlEditorKit());
-        xmlEditor.setFont(new Font("Courier New", Font.PLAIN, 12));
-        xmlEditor.setContentType("text/xml");
-        xmlScrollPane = new JScrollPane(xmlEditor);
+        payloadEditor = new JEditorPane();
+        payloadEditor.setEditable(false);
+        payloadEditor.setEditorKitForContentType("application/xml", new XmlEditorKit());
+        payloadEditor.setEditorKitForContentType("application/json", new JsonEditorKit());
+        payloadEditor.setFont(new Font("Courier New", Font.PLAIN, 12));
+        xmlScrollPane = new JScrollPane(payloadEditor);
 
         splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, tableScrollPane, xmlScrollPane);
 
@@ -181,7 +181,7 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
             sortKeys.add(new RowSorter.SortKey(5, SortOrder.DESCENDING));
             sorter.setSortKeys(sortKeys);
             table.setRowSorter(sorter);
-            xmlEditor.setText("");
+            payloadEditor.setText("");
             retrieveTask = new RetrieveNotificationsTask(this, amqpSettings.getQueue());
             retrieveTask.execute();
             updateUI();
@@ -234,8 +234,10 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
         int row = table.getSelectedRow();
         if (row >= 0) {
             row = table.convertRowIndexToModel(row);
+            String contentType = tableModel.getContentTypeForRow(row);
+            payloadEditor.setContentType(contentType);
             String payload = tableModel.getPayloadAndHeadersForRow(row);
-            xmlEditor.setText(payload);
+            payloadEditor.setText(payload);
         }
     }
 

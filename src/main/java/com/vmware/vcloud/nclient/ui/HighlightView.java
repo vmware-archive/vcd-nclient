@@ -2,7 +2,7 @@ package com.vmware.vcloud.nclient.ui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -16,24 +16,13 @@ import javax.swing.text.PlainView;
 import javax.swing.text.Segment;
 import javax.swing.text.Utilities;
 
-public class XmlView extends PlainView {
+public class HighlightView extends PlainView {
 
-    static HashMap<Pattern, Color> PATTERN_COLORS;
-    static String TAG_PATTERN = "(</?[\\w:]*\\s?>?)";
-    static String TAG_END_PATTERN = "(/>)";
-    static String ATTR_KEY_PATTERN = "\\s([\\w:]*)\\=";
-    static String ATTR_VALUE_PATTERN = "[a-z-]*\\=(\"[^\"]*\")";
+    final Map<Pattern, Color> patternToColor;
 
-    static {
-        PATTERN_COLORS = new HashMap<Pattern, Color>();
-        PATTERN_COLORS.put(Pattern.compile(TAG_PATTERN), new Color(63, 127, 127));
-        PATTERN_COLORS.put(Pattern.compile(TAG_END_PATTERN), new Color(63, 127, 127));
-        PATTERN_COLORS.put(Pattern.compile(ATTR_KEY_PATTERN), new Color(127, 0, 127));
-        PATTERN_COLORS.put(Pattern.compile(ATTR_VALUE_PATTERN), new Color(42, 0, 255));
-    }
-
-    public XmlView(Element element) {
+    public HighlightView(Element element, Map<Pattern, Color> patternToColor) {
         super(element);
+        this.patternToColor = patternToColor;
         getDocument().putProperty(PlainDocument.tabSizeAttribute, 4);
     }
 
@@ -68,8 +57,8 @@ public class XmlView extends PlainView {
 
     Set<ColorSegment> getColorSegments(String text) {
         Set<ColorSegment> result = new TreeSet<ColorSegment>();
-        for (Pattern pattern : PATTERN_COLORS.keySet()) {
-            Color color = PATTERN_COLORS.get(pattern);
+        for (Pattern pattern : patternToColor.keySet()) {
+            Color color = patternToColor.get(pattern);
             Matcher m = pattern.matcher(text);
             while (m.find()) {
                 ColorSegment cs = new ColorSegment(m.start(1), m.end(1), color);

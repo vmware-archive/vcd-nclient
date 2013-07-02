@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.Date;
 
 import com.rabbitmq.client.AMQP.BasicProperties;
@@ -47,6 +48,7 @@ public class NotificationMessageTest {
         Calendar cal = Calendar.getInstance();
         cal.set(2011, 5, 10, 10, 4, 49);
         cal.set(Calendar.MILLISECOND, 47);
+        cal.setTimeZone(TimeZone.getTimeZone("GMT+1"));
         assertEquals(msg.getTimestamp(), cal.getTime());
     }
 
@@ -110,7 +112,7 @@ public class NotificationMessageTest {
         		"    <vmext:EntityLink rel=\"up\" type=\"vcloud:org\" name=\"Default\" id=\"urn:vcloud:org:251ae0f6-9780-429d-a8cf-9495c036eef2\"/>\r\n" +
         		"    <vmext:EntityLink rel=\"task\" type=\"vcloud:task\" name=\"vappUpdateVm\" id=\"urn:vcloud:task:a56be2f7-2cb4-4561-a7ef-ee2fdd2d3a15\"/>\r\n" +
         		"    <vmext:EntityLink rel=\"task:owner\" type=\"vcloud:vm\" id=\"urn:vcloud:vm:26839d04-5050-4702-a602-0667be86dad6\"/>\r\n" +
-        		"    <vmext:Timestamp>2011-06-10T10:04:49.047+03:00</vmext:Timestamp>\r\n" +
+        		"    <vmext:Timestamp>2011-06-10T10:04:49.047+01:00</vmext:Timestamp>\r\n" +
         		"    <vmext:OperationSuccess>true</vmext:OperationSuccess>\r\n" +
         		"</vmext:Notification>";
     }

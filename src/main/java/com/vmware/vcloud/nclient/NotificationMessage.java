@@ -121,8 +121,14 @@ public class NotificationMessage implements Comparable<NotificationMessage>{
             result.success = (Boolean) data.get(JSON_KEY_STATUS);
         }
         if (data.containsKey(JSON_KEY_TIMESTAMP)) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-            result.timestamp = sdf.parse((String) data.get(JSON_KEY_TIMESTAMP));
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+                result.timestamp = sdf.parse((String) data.get(JSON_KEY_TIMESTAMP));
+            } catch (java.text.ParseException ex) {
+                String date = (String) data.get(JSON_KEY_TIMESTAMP);
+                XMLGregorianCalendar xmlDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(date);
+                result.timestamp = xmlDate.toGregorianCalendar().getTime();
+            }
         }
         return result;
     }

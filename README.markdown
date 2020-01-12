@@ -1,3 +1,5 @@
+# VMware has ended active development of this project, this repository will no longer be updated.
+
 ### Summary
 vcd-nclient aims to be a quick start for using the Notifications feature in [vCloud Director].
 The application can connect to an AMQP broker, retrieve notification messages and display
